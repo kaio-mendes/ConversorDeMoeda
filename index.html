@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="conversor.css"></link>
+    <link rel="icon" href="moeda.png"></link>
+    <title>Conversor</title>
+</head>
+<body>
+   <div class="teste">
+    <container>
+        <div class="moeda">
+        <img  src="moeda.svg"></img>
+    </div>
+    <h1>Conversor de Real</h1>
+    
+    <div class="escolha">
+        <input type="radio" name="direcao" id="converter-para" value="para" checked> <label for="converter-para">Converter para Real</label>
+        <input type="radio" name="direcao" id="converter-de" value="de"> <label for="converter-de">Converter de Real para</label>
+    </div>
+
+    <div class="escolha">
+        <input type="radio" name="moeda" id="euro" value="€"> <label for="euro">Euro</label> </input>
+        <input type="radio" name="moeda" id="dolar" value="US$" > <label for="dolar">Dólar</label> </input>
+        <input type="radio" name="moeda" id="libra" value="£" > <label for="libra">Libra Esterlina</label> </input>
+    </div>
+
+    <h1>Valor: </h1>
+    <label for="valor">Digite o valor em reais: </label>
+    <input type="text" id="valor" onfocus="atualizarPlaceholder()"/>
+
+   
+    <button onclick="converter()">Converter</button>
+    
+    
+
+    <div class="res">
+    <p name="res" id="res"></p>
+</div>
+
+    <script>
+function converter() {
+            let valor = parseFloat(document.getElementById("valor").value);
+            let radioDirecao = document.querySelector('input[name="direcao"]:checked');
+            let radioMoeda = document.querySelector('input[name="moeda"]:checked');
+            let taxa = 0;
+
+            if (isNaN(valor) || valor <= 0) {
+                document.getElementById("res").innerText = "Por favor, insira um valor válido.";
+            } else if (radioDirecao && radioMoeda) {
+                switch (radioMoeda.id) {
+                    case "euro":
+                        taxa = 5.39;
+                        break;
+                    case "dolar":
+                        taxa = 4.88;
+                        break;
+                    case "libra":
+                        taxa = 6.22;
+                        break;
+                }
+
+                let resultado = (radioDirecao.value === "para") ? valor * taxa : valor / taxa;
+                document.getElementById("res").innerText = `Resultado: ${resultado.toFixed(2)} ${radioDirecao.value === "para" ? "R$" : radioMoeda.value.toUpperCase()}`;
+            } else {
+                document.getElementById("res").innerText = "Por favor, selecione a direção e a moeda.";
+            }
+        }
+
+
+        document.querySelectorAll('input[name="moeda"]').forEach(function(radio) {
+            radio.addEventListener('change', atualizarPlaceholder);
+        });
+        function atualizarPlaceholder(){
+            let radioMoeda = document.querySelector('input[name="moeda"]:checked');
+            let placeholder = (radioMoeda) ? radioMoeda.value : 'Valor';
+            document.getElementById('valor').placeholder = placeholder;
+        }
+    </script>
+
+ 
+
+<footer>
+<a href="https://www.instagram.com/mendes_kaio__/"> <img src="instagram.png"></img></a>
+<a href="https://www.linkedin.com/in/kaio-vitor-c-mendes-449685264/"> <img src="linkedin.png"></img></a>
+<a href="https://www.github.com/kaio-mendes"> <img src="github.png"></img></a>
+<p><span >kaio Vitor Couto Mendes</span> &copy;2023</p >
+</container>
+</footer>
+</body>
+</html>
